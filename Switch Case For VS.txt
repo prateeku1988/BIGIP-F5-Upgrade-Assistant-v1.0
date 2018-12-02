@@ -2,15 +2,15 @@
 ##
 ##################################################################################
 ##
-## Author :
+## Author : Prateek Upadhyay
 ##
-## Title  :
+## Title  : Virtual/Pool/VIP config
 ##
-## Date   :
+## Date   : 11/28/2018
 ##
-## Objective :
+## Objective : Objective of this script is to pool the configuration of Virtual/Pool/VIP and also finding the used Public VIPs
 ##
-## Version Control :
+## Version Control : 1.0
 ###############################################################################
 echo -n "Please select the menu option below: "
 
