@@ -2,17 +2,16 @@
 ##
 ##################################################################################
 ##
-## Author : Prateek Upadhyay 
+## Author : Prateek Upadhyay
 ##
-## Title  : Virtual Servers/Pool/VIP Config Script
+## Title  : F5 LTM Objects Configuration
 ##
 ## Date   : 28.11.2018
 ##
-## Objective : This script will show you the config of Virtual Servers/Pools/ VIP IP from F5
+## Objective : This script will show the config of Virtual Servers/Pools/VIP and associated members
 ##
-## Version Control : 1.1
+## Version Control : 1.2
 ###############################################################################
-
 echo -n "Please select the menu option below: "
 
 cat <<- HERE
@@ -28,39 +27,41 @@ cat <<- HERE
 HERE
 
 
+
 read _Option
 
 case $_Option in 
 
                 1) echo "Please enter Virtual Server name"
                 read _VSNAME
-                tmsh -c 'cd /www-qa;list ltm virtual' | awk -v c1="$_VSNAME" '($0 ~ ".*"c1),($0 ~ "vs-index")'
+                tmsh -c 'cd /;list ltm virtual recursive' | awk -v c1="$_VSNAME" '($0 ~ ".*"c1),($0 ~ "vs-index")'
                 ;;
                 2) echo "Please enter Pool name"
                 read _POOLNAME
-                tmsh -c 'cd /www-qa;list ltm pool' | awk -v d2="$_POOLNAME" '($0 ~ ".*"d2),($0 ~ "partition")'
+                tmsh -c 'cd /;list ltm pool recursive' | awk -v d2="$_POOLNAME" '($0 ~ ".*"d2),($0 ~ "partition")'
                 ;;
                 3) echo "Please enter Virtual Server IP"
                 read _VSIP
-                for _VS in `tmsh -c 'cd /www-qa;list ltm virtual' | grep -B 1 "$_VSIP" | awk '{ print $3 }' | sed '/^$/d'`; do tmsh -c 'cd /www-qa;list ltm virtual' | awk -v c1="$_VS" '($0 ~ ".*"c1),($0 ~
- "vs-index")'; sleep 5; done
+                for _VS in `tmsh -c 'cd /;list ltm virtual recursive' | grep -B 1 "$_VSIP" | awk '{ print $3 }' | sed '/^$/d'`; do tmsh -c 'cd /;list ltm virtual recursive' | awk -v c1="$_VS" '($0 ~ "^ltm
+.*"c1),($0 ~ "vs-index")'; sleep 5; done
                 ;;
                 4) echo "Please enter the Virtual Server IP"
                 read _VSIP1
-                foo=$(for _VS1 in `tmsh -c 'cd /www-qa;list ltm virtual' | grep -B 1 "$_VSIP1" | awk '{ print $3 }' | sed '/^$/d'`; do tmsh -c 'cd /www-qa;list ltm virtual' | awk -v c6="$_VS1" '($0 ~ ".*"
-c6),($0 ~ "vs-index")'; sleep 5; done |  grep 'pool' | awk '{print $2}'| sort -u )
-                for _Pool in $foo; do tmsh -c 'cd /www-qa;list ltm pool' | awk -v d3="$_Pool" '($0 ~ ".*"d3),($0 ~ "partition")' ; sleep 5; done
+                foo=$(for _VS in `tmsh -c 'cd /;list ltm virtual recursive' | grep -B 1 "$_VSIP1" | awk '{ print $3 }' | sed '/^$/d'`; do tmsh -c 'cd /;list ltm virtual recursive' | awk -v c1="$_VS" '($0 
+~ ".*"c1),($0 ~ "vs-index")'; sleep 5; done |  grep 'pool' | awk '{print $2}' | sort -u )
+                for _Pool in $foo; do tmsh -c 'cd /;list ltm pool recursive' | awk -v d2="$_Pool" '($0 ~ ".*"d2),($0 ~ "partition")' ; sleep 5; done
                 ;;
                 5) echo "Please enter the Virtual Server IP"
                 read _VSIP2
-                a=$(for _VS2 in `tmsh -c 'cd /www-qa;list ltm virtual' | grep -B 1 "$_VSIP2" | awk '{ print $3 }' | sed '/^$/d'`; do tmsh -c 'cd /www-qa;list ltm virtual' | awk -v c7="$_VS2" '($0 ~ ".*"c7
-),($0 ~ "vs-index")'; sleep 5; done)
-                foo=$(for _VS2 in `tmsh -c 'cd /www-qa;list ltm virtual' | grep -B 1 "$_VSIP2" | awk '{ print $3 }' | sed '/^$/d'`; do tmsh -c 'cd /www-qa;list ltm virtual' | awk -v c7="$_VS2" '($0 ~ ".*"
-c7),($0 ~ "vs-index")'; sleep 5; done |  grep 'pool' | awk '{print $2}'| sort -u )
-                b=$(for _Pool in $foo; do tmsh -c 'cd /www-qa;list ltm pool' | awk -v d6="$_Pool" '($0 ~ ".*"d6),($0 ~ "partition")' ; sleep 5; done)
+                a=$(for _VS2 in `tmsh -c 'cd /;list ltm virtual recursive' | grep -B 1 "$_VSIP2" | awk '{ print $3 }' | sed '/^$/d'`; do tmsh -c 'cd /;list ltm virtual recursive' | awk -v c7="$_VS2" '($0 
+~ ".*"c7),($0 ~ "vs-index")'; sleep 5; done)
+                foo=$(for _VS2 in `tmsh -c 'cd /;list ltm virtual recursive' | grep -B 1 "$_VSIP2" | awk '{ print $3 }' | sed '/^$/d'`; do tmsh -c 'cd /;list ltm virtual recursive' | awk -v c7="$_VS2" '($
+0 ~ ".*"c7),($0 ~ "vs-index")'; sleep 5; done |  grep 'pool' | awk '{print $2}')
+                b=$(for _Pool in $foo; do tmsh -c 'cd /;list ltm pool recursive' | awk -v d6="$_Pool" '($0 ~ ".*"d6),($0 ~ "partition")' ; sleep 5; done)
                 c="$a\n$b"
                 echo -e "$c"
-                ;;
+                ;;      
                 6.) exit
 
 esac
+
