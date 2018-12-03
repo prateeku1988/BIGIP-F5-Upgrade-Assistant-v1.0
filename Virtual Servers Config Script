@@ -19,9 +19,9 @@ cat <<- HERE
 
         1. Show me the configuration of specific virtual server ?
         2. Show me the configuration of specific pool ?
-        3. Show me the configuration of specific virtual server ?
-        4. Show me the configuration of pool ?
-        5. Show me the total configuration of virtual server and pool ?
+        3. Show me the configuration of specific virtual server , if you have VIP handy ?
+        4. Show me the configuration of pool , if you have VIP handy ?
+        5. Show me the total configuration of virtual server and pool by just knowing VIP ?
         6. Bye !!
 
 HERE
