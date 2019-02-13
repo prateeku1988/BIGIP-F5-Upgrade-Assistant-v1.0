@@ -51,3 +51,6 @@ Execute the script:
 
 ./Upgrade_Assistant_v1.0.sh
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+Note : Currently This tool is designed for LTM's only . Also this is tested with 12.x.x versions
+
