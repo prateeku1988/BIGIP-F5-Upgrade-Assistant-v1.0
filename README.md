@@ -16,7 +16,7 @@ How do we know if we have same number of active virtual servers , pool members e
 How many of them are in disabled state ?
 If any change happened after upgrade how to check which one are affected and what’s the reason behind it ? 
 
-Availale Solutions : 
+Available Solutions : 
 
 Network Map is an option.However, network map is only for LTM . Also that is a map that start from a virtual server, so if you have a pool that is not linked to a virtual server that will not count in the totals.
 
