@@ -1,4 +1,4 @@
-## BIGIP F5 Upgrade Assistant v1.
+## BIGIP F5 Upgrade Assistant v1.0
 
 Objective : Below snippet will show the total no of objects, their availability status , states before and after upgrade . Any change in all of those parameters will displayed over the terminal screen . Also it will mention what changed and reason for it in side by side
 pattern ...
